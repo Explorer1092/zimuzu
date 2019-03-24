@@ -1,9 +1,10 @@
 FROM alpine:latest as builder
+ARG DATE=20190324
 ADD https://appdown.rrysapp.com/rrshareweb_centos7.tar.gz /tmp/
 RUN tar zxvf /tmp/rrshareweb_centos7.tar.gz -C /tmp/
 
 FROM alpine:latest
-RUN apk add  -U --no-cache tzdata
+RUN apk add  -U --no-cache tzdata libstdc++ libgcc
 RUN ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 WORKDIR /root/
 COPY --from=builder /tmp/rrshareweb /app
