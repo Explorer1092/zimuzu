@@ -14,8 +14,8 @@ RUN wget -q "https://github.com/sgerrand/alpine-pkg-glibc/releases/download/${GL
 RUN ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 WORKDIR /root/
 COPY --from=builder /tmp/rrshareweb /app
-RUN mkdir /opt/work/store && \
-	chmod -R 777 /opt/work/store
+RUN mkdir -p /opt/work/store && \
+	chmod -R 777 /opt/work/
 EXPOSE 3001/tcp
 VOLUME ["/opt/work/store"]
 WORKDIR /app
