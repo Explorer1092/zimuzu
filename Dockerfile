@@ -4,7 +4,6 @@ ADD ./rrshareweb_centos7.tar.gz /tmp/
 # ADD http://appdown.rrysapp.com/rrshareweb_centos7.tar.gz /tmp/
 # RUN tar zxvf /tmp/rrshareweb_centos7.tar.gz -C /tmp/
 
-
 FROM alpine:latest
 ENV GLIBC_VERSION=2.28-r0
 RUN apk add  -U --no-cache tzdata wget libstdc++ libgcc
@@ -17,6 +16,8 @@ WORKDIR /root/
 COPY --from=builder /tmp/rrshareweb /app
 # RUN mkdir /lib64
 # RUN ln -s /lib/libc.musl-x86_64.so.1 /lib64/ld-linux-x86-64.so.2
+RUN echo '{"port" : 3001 ,"logpath" : "","logqueit" : false,"loglevel" : 1,"logpersistday" : 2,"defaultsavepath" : "/data" }' > /app/rrshareweb/conf/rrshare.json
+RUN mkdir /data && chmod -R 777 /data
 EXPOSE 3001/tcp
 WORKDIR /app
-CMD ["/app/rrshareweb"]  
+CMD ["/app/rrshareweb"]
