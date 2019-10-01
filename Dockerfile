@@ -14,7 +14,9 @@ RUN wget -q "https://github.com/sgerrand/alpine-pkg-glibc/releases/download/${GL
 RUN ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 WORKDIR /root/
 COPY --from=builder /tmp/rrshareweb /app
-RUN echo '{"port" : 3001 ,"logpath" : "","logqueit" : false,"loglevel" : 1,"logpersistday" : 2,"defaultsavepath" : "/data" }' > /app/conf/rrshare.json && mkdir /data && chmod -R 777 /data
+RUN mkdir /opt/work/store && \
+	chmod -R 777 /opt/work/store
 EXPOSE 3001/tcp
+VOLUME ["/opt/work/store"]
 WORKDIR /app
 CMD ["/app/rrshareweb"]
